@@ -30,3 +30,7 @@ Storage Account
 AKS Cluster
      ↓
 SQL Server → SQL Database → Firewall Rules → Private Endpoint
+
+
+Resource Group
+<img width="444" height="88" alt="image" src="https://github.com/user-attachments/assets/41947e0b-1825-4cff-841a-6e4ba899172d" />
