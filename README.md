@@ -32,5 +32,5 @@ AKS Cluster
 SQL Server → SQL Database → Firewall Rules → Private Endpoint
 
 
-Resource Group
-<img width="444" height="88" alt="image" src="https://github.com/user-attachments/assets/41947e0b-1825-4cff-841a-6e4ba899172d" />
+<img width="447" height="840" alt="image" src="https://github.com/user-attachments/assets/2c5470ae-0fd2-4147-b708-c393bc2b3cef" />
+
