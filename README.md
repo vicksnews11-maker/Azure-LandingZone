@@ -1,4 +1,5 @@
-<img width="371" height="1890" alt="image" src="https://github.com/user-attachments/assets/97c767f6-2f06-4336-8659-6870f2447a15" />
+Project Structure for Azure Landing Zone
+<img width="396" height="1927" alt="image" src="https://github.com/user-attachments/assets/4dc0b21d-aeed-4230-b42e-fad90571310d" />
 
 <img width="838" height="613" alt="image" src="https://github.com/user-attachments/assets/5b4b95a4-8e1b-4218-af32-d72de8129c9d" />
 
