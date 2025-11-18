@@ -1,3 +1,9 @@
+<img width="371" height="1890" alt="image" src="https://github.com/user-attachments/assets/97c767f6-2f06-4336-8659-6870f2447a15" />
+
+<img width="838" height="613" alt="image" src="https://github.com/user-attachments/assets/5b4b95a4-8e1b-4218-af32-d72de8129c9d" />
+
+<img width="447" height="840" alt="image" src="https://github.com/user-attachments/assets/2c5470ae-0fd2-4147-b708-c393bc2b3cef" />
+
 -----------------------------------------------------------------------------------------------------
 | Order  |   Module Name                   | Why / Dependency                                        |
 | -------| --------------------------------|-------------------------------------------------------- |
@@ -31,6 +37,4 @@ AKS Cluster
      ↓
 SQL Server → SQL Database → Firewall Rules → Private Endpoint
 
-
-<img width="447" height="840" alt="image" src="https://github.com/user-attachments/assets/2c5470ae-0fd2-4147-b708-c393bc2b3cef" />
 
