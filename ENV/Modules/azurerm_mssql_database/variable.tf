@@ -1,12 +1,13 @@
 variable "lzsqldb" {
-  description = "Configuration object for the SQL database."
-  type = object({
-    name = string
-    # Include other expected fields if necessary
-  })
+  description = "SQL Databases"
+  type = map(object({
+    name         = string
+    server_key   = string
+    sku_name     = string
+    max_size_gb  = number
+  }))
 }
 
-variable "server_id" {
-  description = "The ID of the SQL Server."
-  type        = string
+variable "server_ids" {
+  type = map(string)
 }

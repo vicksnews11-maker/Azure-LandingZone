@@ -17,6 +17,7 @@ variable "lzvnet" {
     address_space       = list(string)
     subnet_prefixes     = list(string)
     subnet_names        = list(string)
+    vnet1               = { id = "/subscriptions/<sub>/resourceGroups/rg-vnet/providers/Microsoft.Network/virtualNetworks/vnet1" }
   }))
 }
 
@@ -200,28 +201,34 @@ variable "lzsql" {
 }
 #SQL Database variables------------------
 variable "lzsqldb" {
-  description = "Configuration object for the SQL database."
-  type = object({
-    name = string
-    # Include other expected fields if necessary
-  })
+  description = "SQL Databases"
+  type = map(object({
+    name        = string
+    server_key  = string
+    sku_name    = string
+    max_size_gb = number
+  }))
 }
 
-variable "server_id" {
-  description = "The ID of the SQL Server."
-  type        = string
+variable "server_ids" {
+  type = map(string)
 }
+
 #SQL Firewall Rules (optional) variables-----
 variable "lzfirewall" {
-  description = "The name to use for the MSSQL Firewall Rule."
-  type        = string
+  description = "Map of firewall rules"
+  type = map(object({
+    name     = string
+    start_ip = string
+    end_ip   = string
+  }))
 }
+
 variable "lzsql" {
-  description = "Configuration or object representing the MSSQL Server."
-  type = object({
-    id = string # We only explicitly need the 'id' attribute for the server_id argument
-  })
+  description = "SQL server object"
+  type        = any
 }
+
 variable "start_ip_address" {
   description = "The starting IP address for the firewall rule."
   type        = string
@@ -234,59 +241,54 @@ variable "end_ip_address" {
 }
 
 # SQL Private Endpoint (optional) variables-----
+variable "lzpvt" {
+  type = object({
+    name                = string
+    location            = string
+    resource_group_name = string
+  })
+}
 
+variable "lzsubnet" {
+  type = object({
+    id = string
+  })
+}
 
+variable "lzpvt_sc" {
+  type = object({
+    name                           = string
+    private_connection_resource_id = string
+    subresource_names              = list(string)
+    is_manual_connection           = bool
+  })
+}
 
+variable "lzdnszg" {
+  type = object({
+    name                 = string
+    private_dns_zone_ids = list(string)
+  })
+}
 
+variable "lzdnsz" {
+  description = "Multiple private DNS zones"
+  type = map(object({
+    name                = string
+    resource_group_name = string
+  }))
+}
 
+variable "lzdnsvn" {
+  type = object({
+    name                  = string
+    resource_group_name   = string
+    private_dns_zone_name = string
+  })
+}
 
-# variable "lzsubnet" {
-#   description = "A map of subnets to create"
-#   type = map(object({
-#     name                 = string
-#     resource_group_name  = string
-#     virtual_network_name = string
-#     address_prefixes     = list(string)
-#   }))
-# }
-
-# variable "prefix" {
-#   description = "The prefix to use for all resources"
-#   type        = string
-#   default     = "lz"
-# }
-
-# variable "environment" {
-#   description = "The environment for the landing zone"
-#   type        = string
-#   default     = "dev"
-# }
-# variable "lznsg" {
-#   description = "Map of network security groups to create"
-#   type = map(object({
-#     name                = string
-#     location            = string
-#     resource_group_name = string
-#   }))
-# }
-# variable "lz_appgateway" {
-#   description = "Map of Application Gateways to create"
-#   type = map(object({
-#     name                = string
-#     location            = string
-#     resource_group_name = string
-#   }))
-# }
-
-# variable "lzvm" {
-#   description = "Map of VMs"
-#   type        = map(object({
-#     subnet_id = string
-#     location  = string
-#     resource_group_name = string
-#     admin_username = string
-#     admin_password = string 
-#     subnet_prefix  = string
-#     vm_size        = string
-#   }))
-# }
+variable "lzvnet" {
+  type = object({
+    id = string
+  })
+}

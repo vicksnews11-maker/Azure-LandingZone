@@ -68,8 +68,7 @@ module "azurerm_bastion_host" {
 #AKS Cluster
 module "azurerm_kubernetes_cluster" {
   source = "../Modules/azurerm_kubernetes_cluster"
-
-  lzaks = var.lzaks
+  lzaks  = var.lzaks
   # Optional dependencies
   depends_on = [module.azurerm_resource_group, module.azurerm_subnet]
 }
@@ -91,7 +90,7 @@ module "azurerm_mssql_server" {
 module "azurerm_mssql_database" {
   source     = "../Modules/azurerm_mssql_database"
   lzsqldb    = var.lzsqldb
-  server_id  = var.lzsql.id
+  server_ids = var.server_ids
   depends_on = [module.azurerm_mssql_server]
 }
 #SQL Firewall Rules (optional)
@@ -101,6 +100,7 @@ module "azurerm_mssql_firewall_rule" {
   lzsql      = var.lzsql
   depends_on = [module.azurerm_mssql_server]
 }
+
 # SQL Private Endpoint (optional) 
 module "azurerm_private_endpoint_sql" {
   source     = "../Modules/azurerm_private_endpoint_sql"

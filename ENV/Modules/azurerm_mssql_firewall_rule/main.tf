@@ -1,6 +1,6 @@
 resource "azurerm_mssql_firewall_rule" "firewall" {
-  name             = var.lzfirewall
-  server_id        = var.lzsql.id
-  start_ip_address = var.start_ip_address
-  end_ip_address   = var.end_ip_address
+  name             = var.lzfirewall.name
+  server_id        = var.server_ids[var.lzfirewall.server_key]
+  start_ip_address = var.lzfirewall.start_ip
+  end_ip_address   = var.lzfirewall.end_ip
 }

@@ -40,7 +40,7 @@ lzvnet = {
   }
 }
 
-# Subnets to create
+# Subnets 
 lzsubnet = {
   subnet1 = {
     resource_group_name  = "lz-rg1"
@@ -70,7 +70,7 @@ lznsg = {
     location            = "East US"
   }
 }
-# Virtual Machine variables
+# Virtual Machine 
 prefix = "tfvm"
 
 admin_username = "azureuser"
@@ -103,9 +103,6 @@ lzvm = {
     nic_name            = "vm2"
   }
 }
-
-
-    
 # Application Gateway
 public_ip_id = "/subscriptions/xxxx/resourceGroups/my-rg/providers/Microsoft.Network/publicIPAddresses/my-pip"
 
@@ -131,12 +128,12 @@ lzappgateway = {
 # Bastion
 lzbastionhost = {
   lzbastion1 = {
-  name                = "lz-bastionhost"
-  subnet_id           = "/subscriptions/<sub-id>/resourceGroups/landingzone-rg/providers/Microsoft.Network/virtualNetworks/lz-vnet/subnets/AzureBastionSubnet"
-  public_ip_name      = "lz-bastion-pip"
-  location            = "West Europe"
-  resource_group_name = "lz-rg1"
-}
+    name                = "lz-bastionhost"
+    subnet_id           = "/subscriptions/<sub-id>/resourceGroups/landingzone-rg/providers/Microsoft.Network/virtualNetworks/lz-vnet/subnets/AzureBastionSubnet"
+    public_ip_name      = "lz-bastion-pip"
+    location            = "West Europe"
+    resource_group_name = "lz-rg1"
+  }
 }
 
 # Key Vault
@@ -151,7 +148,7 @@ lzkeyvault = {
 }
 
 # Load Balancer 
- lzlbpip = {
+lzlbpip = {
   name                = "lz-lb-pip"
   location            = "West Europe"
   resource_group_name = "lz-resourcegroup"
@@ -164,4 +161,143 @@ lzlb = {
     resource_group_name = "lz-rg1"
   }
 }
+#----------------------
+# AKS - two clusters
+lzaks = {
+  aks1 = {
+    name                = "aks-1"
+    location            = "eastus"
+    resource_group_name = "rg-aks"
+    dns_prefix          = "aks1"
+    node_pool = {
+      name       = "agentpool"
+      node_count = 2
+      vm_size    = "Standard_DS2_v2"
+    }
+  }
+  aks2 = {
+    name                = "aks-2"
+    location            = "eastus2"
+    resource_group_name = "rg-aks"
+    dns_prefix          = "aks2"
+    node_pool = {
+      name       = "agentpool"
+      node_count = 1
+      vm_size    = "Standard_DS2_v2"
+    }
+  }
+}
 
+# # Key Vaults
+# lzkeyvault = {
+#   kv1 = { name = "kv-1" location = "eastus" resource_group_name = "rg-kv" }
+#   kv2 = { name = "kv-2" location = "eastus2" resource_group_name = "rg-kv" }
+# }
+
+# SQL Servers
+lzsql = {
+  sql1 = {
+    name                         = "sqlserver1"
+    location                     = "eastus"
+    resource_group_name          = "rg-sql"
+    version                      = "12.0"
+    administrator_login          = "sqladmin"
+    administrator_login_password = "P@ssw0rd123!"
+    minimum_tls_version          = "1.2"
+  }
+  sql2 = {
+    name                         = "sqlserver2"
+    location                     = "eastus2"
+    resource_group_name          = "rg-sql"
+    version                      = "12.0"
+    administrator_login          = "sqladmin2"
+    administrator_login_password = "P@ssw0rd456!"
+    minimum_tls_version          = "1.2"
+  }
+}
+
+# SQL Databases (each database points to a server_key from lzsql)
+lzsqldb = {
+  db1 = {
+    name        = "appdb1"
+    server_key  = "sql1"
+    sku_name    = "S0"
+    max_size_gb = 2
+  }
+  db2 = {
+    name        = "appdb2"
+    server_key  = "sql2"
+    sku_name    = "S0"
+    max_size_gb = 2
+  }
+}
+
+server_ids = {
+  sql1 = "/subscriptions/xxx/resourceGroups/rg1/providers/Microsoft.Sql/servers/sqlserver1"
+  sql2 = "/subscriptions/xxx/resourceGroups/rg1/providers/Microsoft.Sql/servers/sqlserver2"
+}
+
+# Firewall rules per server
+lzfirewall = {
+  rule1 = {
+    name     = "AllowHome"
+    start_ip = "1.1.1.1"
+    end_ip   = "1.1.1.1"
+  }
+  rule2 = {
+    name     = "AllowOffice"
+    start_ip = "2.2.2.2"
+    end_ip   = "2.2.2.2"
+  }
+
+  lzsql = {
+    id = "/subscriptions/xxxxx/resourceGroups/rg1/providers/Microsoft.Sql/servers/sqlserver1"
+  }
+}
+
+# Private DNS zones
+lzdnsz = {
+  pdz1 = {
+    name                = "privatelink.database.windows.net"
+    resource_group_name = "rg-dns"
+  }
+  pdz2 = {
+    name                = "privatelink.other.windows.net"
+    resource_group_name = "rg-dns"
+  }
+}
+
+# Private endpoints
+lzpvt = {
+  pvt1 = {
+    name                = "pe-sql1"
+    location            = "eastus"
+    resource_group_name = "rg-pe"
+    subnet_id           = "/subscriptions/<sub>/resourceGroups/rg-vnet/providers/Microsoft.Network/virtualNetworks/vnet1/subnets/subnet1"
+  }
+}
+
+lzpvt_sc = {
+  pvt1 = {
+    name                           = "psc-sql1"
+    private_connection_resource_id = "/subscriptions/<sub>/resourceGroups/rg-sql/providers/Microsoft.Sql/servers/sqlserver1"
+    subresource_names              = ["sqlServer"]
+    is_manual_connection           = false
+    server_key                     = "sql1"
+  }
+}
+
+lzdnszg = {
+  pvt1 = { name = "zonegroup1"
+  private_dns_zone_key = "pdz1" }
+}
+
+# private dns zone virtual network links (if any)
+lzdnsvn = {
+  link1 = {
+    name                  = "link-test"
+    resource_group_name   = "rg-dns"
+    private_dns_zone_name = "privatelink.database.windows.net"
+    virtual_network_id    = "/subscriptions/<sub>/resourceGroups/rg-vnet/providers/Microsoft.Network/virtualNetworks/vnet1"
+  }
+}
