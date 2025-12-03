@@ -32,6 +32,6 @@ stages:
     - task: ManualValidation@1
       displayName: "Approve to Continue"
       inputs:
-        instructions: "Click Approve to continue."
-        onTimeout: 'reject'
-        timeout: '1'  # hours
+        notifyUsers: 'user1@shaiksk2025outlook.onmicrosoft.com'
+        approvers: 'check'
+        instructions: 'Click Approve to continue.'
