@@ -33,5 +33,4 @@ stages:
       inputs:
         notifyUsers: 'user1@shaiksk2025outlook.onmicrosoft.com'
         approvers: 'user1@shaiksk2025outlook.onmicrosoft.com'
-        allowApproversToApproveTheirOwnRuns: false
         instructions: 'Click Approve to continue.'
