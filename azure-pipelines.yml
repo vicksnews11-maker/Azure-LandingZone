@@ -29,5 +29,5 @@ stages:
     steps:
     - task: ManualValidation@1
       inputs:
-       notifyUsers: 'vicksnews11@gmail.com'
-       approvers: 'vicks'
+        notifyUsers: 'user1@shaiksk2025outlook.onmicrosoft.com'
+        approvers: 'vicks'
