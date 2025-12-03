@@ -1,5 +1,9 @@
 trigger: none
 
+pool:
+name: Myagent
+
+
 stages:
 # ------------------------- #
 # Stage 1 : Build using your agent
