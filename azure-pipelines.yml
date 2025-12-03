@@ -1,10 +1,10 @@
 trigger: none
 
 pool:
-name: Myagent
-
+  name: Myagent
 
 stages:
+
 # ------------------------- #
 # Stage 1 : Build using your agent
 # ------------------------- #
@@ -14,7 +14,7 @@ stages:
   - job: RunTests
     displayName: "Run Test Job"
     pool:
-      name: Myagent   # <-- your self-hosted agent
+      name: Myagent   # Self-hosted agent
     steps:
     - script: echo "Running tests..."
       displayName: "Test Step"
@@ -29,9 +29,14 @@ stages:
   jobs:
   - job: ManualApproval
     displayName: "Agentless Manual Approval"
-    pool: server     # <-- MUST be server or approval won't work
+    pool: server     # Required for approval / manual validation
     steps:
     - task: ManualValidation@1
       inputs:
-        notifyUsers: 'user1@shaiksk2025outlook.onmicrosoft.com'
-        approvers: 'vicks'
+        notifyUsers: |
+          user1@shaiksk2025outlook.onmicrosoft.com
+        approvers: |
+          vicks@shaiksk2025outlook.onmicrosoft.com
+        instructions: "Please approve to proceed."
+        onTimeout: 'reject'
+        timeout: '0'   # 0 = no timeout
