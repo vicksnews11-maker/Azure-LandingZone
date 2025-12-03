@@ -1,5 +1,4 @@
 trigger: none
-
 pool:
   name: Myagent
 
@@ -33,5 +32,5 @@ stages:
       displayName: "Approve to Continue"
       inputs:
         notifyUsers: 'user1@shaiksk2025outlook.onmicrosoft.com'
-        approvers: 'check'
+        approvers: 'user1@shaiksk2025outlook.onmicrosoft.com'
         instructions: 'Click Approve to continue.'
