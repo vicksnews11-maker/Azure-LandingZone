@@ -1,15 +1,16 @@
-trigger: none   # run manually
+trigger: none
 
 stages:
 # ------------------------- #
-# Stage 1 : Build / Test
+# Stage 1 : Build using your agent
 # ------------------------- #
 - stage: Build
   displayName: "Build Stage"
   jobs:
   - job: RunTests
     displayName: "Run Test Job"
-    pool: Myagent      
+    pool:
+      name: Myagent   # <-- your self-hosted agent
     steps:
     - script: echo "Running tests..."
       displayName: "Test Step"
@@ -20,15 +21,13 @@ stages:
 - stage: Approval
   displayName: "Manual Approval Stage"
   dependsOn: Build
-  condition: succeeded()
 
   jobs:
   - job: ManualApproval
     displayName: "Agentless Manual Approval"
-    pool: server      # <-- THIS makes it agentless, no environment needed
+    pool: server     # <-- MUST be server or approval won't work
     steps:
-    - task: ManualValidation@0
+    - task: ManualValidation@1
       inputs:
-        instructions: "Please approve to continue."
-        onTimeout: 'reject'
-        timeout: '1h'
+       notifyUsers: 'vicksnews11@gmail.com'
+       approvers: 'vicks'
