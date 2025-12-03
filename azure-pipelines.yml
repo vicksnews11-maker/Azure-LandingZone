@@ -1,0 +1,35 @@
+trigger: none   # run manually
+
+stages:
+# ------------------------- #
+# Stage 1 : Build / Test
+# ------------------------- #
+- stage: Build
+  displayName: "Build Stage"
+  jobs:
+  - job: RunTests
+    displayName: "Run Test Job"
+    pool:
+      vmImage: 'ubuntu-latest'
+    steps:
+    - script: echo "Running tests..."
+      displayName: "Test Step"
+
+# ------------------------- #
+# Stage 2 : Manual Approval (Agentless)
+# ------------------------- #
+- stage: Approval
+  displayName: "Manual Approval Stage"
+  dependsOn: Build
+  condition: succeeded()
+
+  jobs:
+  - job: ManualApproval
+    displayName: "Agentless Manual Approval"
+    pool: server      # <-- THIS makes it agentless, no environment needed
+    steps:
+    - task: ManualValidation@0
+      inputs:
+        instructions: "Please approve to continue."
+        onTimeout: 'reject'
+        timeout: '1h'
