@@ -9,8 +9,7 @@ stages:
   jobs:
   - job: RunTests
     displayName: "Run Test Job"
-    pool:
-      vmImage: 'ubuntu-latest'
+    pool: Myagent      
     steps:
     - script: echo "Running tests..."
       displayName: "Test Step"
